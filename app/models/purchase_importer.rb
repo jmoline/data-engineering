@@ -8,16 +8,20 @@ class PurchaseImporter
 
   def self.import(data)
     data.inject(0) do |revenue, row|
-      customer = Customer.find_or_create(name: value_for(:customer_name, row))
-      merchant = Merchant.find_or_create(name: value_for(:merchant_name, row), address: value_for(:merchant_address, row))
-      item = Item.find_or_create(description: value_for(:item_description, row), price: value_for(:item_price, row))
-      purchase = item.purchases.create(customer: customer, merchant: merchant, quantity: value_for(:quantity, row))
-      revenue += purchase.total
+      revenue += row.present? ? process(row) : 0
     end
   end
 
   class << self
     private
+
+    def process(row)
+      customer = Customer.find_or_create(name: value_for(:customer_name, row))
+      merchant = Merchant.find_or_create(name: value_for(:merchant_name, row), address: value_for(:merchant_address, row))
+      item = Item.find_or_create(description: value_for(:item_description, row), price: value_for(:item_price, row))
+      purchase = item.purchases.create(customer: customer, merchant: merchant, quantity: value_for(:quantity, row))
+      purchase.total
+    end
 
     def value_for(name, record)
       record[FIELDS.index(name)]
