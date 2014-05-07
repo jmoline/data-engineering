@@ -31,7 +31,7 @@ describe Merchant do
 
     it "should return a new record when passed a new name" do
       Merchant.stub(:where, []) do
-        Merchant.stub(:create, Merchant.new(name: "Little Mom and Pop")) do
+        Merchant.stub(:create!, Merchant.new(name: "Little Mom and Pop")) do
           merchant = Merchant.find_or_create(name: "Big Box Store")
           merchant.name.must_equal "Little Mom and Pop"
         end

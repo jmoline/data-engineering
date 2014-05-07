@@ -45,7 +45,7 @@ describe Item do
 
     it "should return a new record when passed a new name" do
       Item.stub(:where, []) do
-        Item.stub(:create, Item.new(description: "Little Item")) do
+        Item.stub(:create!, Item.new(description: "Little Item")) do
           item = Item.find_or_create(description: "Big Item")
           item.description.must_equal "Little Item"
         end

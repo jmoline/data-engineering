@@ -27,7 +27,7 @@ describe Customer do
 
     it "should return a new record when passed a new name" do
       Customer.stub(:where, []) do
-        Customer.stub(:create, Customer.new(name: "Testy McTesterson")) do
+        Customer.stub(:create!, Customer.new(name: "Testy McTesterson")) do
           customer = Customer.find_or_create(name: "William Murdoch")
           customer.name.must_equal "Testy McTesterson"
         end
