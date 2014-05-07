@@ -1,0 +1,8 @@
+<%= form_tag imports_path, multipart: true do  %>
+  <p>
+    <label for="import_file">Import file:</label>
+    <%= file_field_tag :purchase_file %>
+  </p>
+
+  <%= submit_tag "Import" %>
+<% end %>
