@@ -7,4 +7,8 @@ class Purchase < ActiveRecord::Base
   validates_presence_of :merchant
   validates_presence_of :item
   validates_numericality_of :quantity, greater_than: 0, allow_nil: false
+
+  def total
+    quantity * item.price
+  end
 end

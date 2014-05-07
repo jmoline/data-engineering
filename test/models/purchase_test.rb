@@ -38,4 +38,12 @@ describe Purchase do
       end
     end
   end
+
+  describe "total" do
+    it "should return the product of quantity and item price" do
+      item = Item.new(price: 12)
+      purchase = Purchase.new(quantity: 2, item: item)
+      purchase.total.must_equal 24
+    end
+  end
 end
