@@ -30,4 +30,26 @@ describe Item do
       end
     end
   end
+
+  it "should respond to find_or_create" do
+    Item.must_respond_to :find_or_create
+  end
+
+  describe "find_or_create" do
+    it "should return an existing record when passed an existing name" do
+      Item.stub(:where, [Item.new(description: "Big Item")]) do
+        item = Item.find_or_create(description: "Little Item")
+        item.description.must_equal "Big Item"
+      end
+    end
+
+    it "should return a new record when passed a new name" do
+      Item.stub(:where, []) do
+        Item.stub(:create, Item.new(description: "Little Item")) do
+          item = Item.find_or_create(description: "Big Item")
+          item.description.must_equal "Little Item"
+        end
+      end
+    end
+  end
 end
